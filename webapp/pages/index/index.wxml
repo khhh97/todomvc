@@ -1,0 +1,43 @@
+<view class="container">
+  <!-- todos 输入框 -->
+  <view class="header">
+    <image bindtap="handleAddTodo" src="../../images/plus.png"></image>
+    <input
+      type="text" 
+      placeholder="Anything here" 
+      value="{{ value }}"
+      bindinput="handleValueChange"
+      bindconfirm="handleAddTodo"
+      ></input>
+  </view>
+  <!-- todos 列表 -->
+  <block wx:if="{{ todos.length > 0 }}">
+    <view class="todos">
+      <view 
+      wx:for="{{ todos }}" 
+      wx:key="{{ item.id }}" 
+      data-id="{{ item.id }}"
+      bindtap="changeTodoState"
+      class="todo-item {{ item.completed ? 'completed' : '' }}"
+      >
+        <icon type="{{ item.completed ? 'success' : 'circle' }}" size="18"></icon>
+        <text>{{ item.title }}</text>
+        <icon 
+        type="clear" 
+        data-id="{{ item.id }}"
+        size="16"
+        catchtap="handleDeleteTodo"
+        ></icon>
+      </view>
+    </view>
+    <!-- todos 尾部 -->
+    <view class="footer">
+      <text bindtap="toggleAll">Toggle all</text>
+      <text>{{ leftCount }} {{ leftCount > 1 ? 'items' : 'item' }} left</text>
+      <text bindtap="clearHasCompleted">clear completed</text>
+    </view>
+  </block>
+  <view wx:else>
+    <text class="null-text">当前没有需要去做事情</text>
+  </view>
+</view>
